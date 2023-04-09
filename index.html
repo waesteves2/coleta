@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Agendamento de coleta</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
+
+	<script>
+		function buscarCNPJ() {
+			var cnpj = $('#cpf_cnpj').val().replace(/[^\d]+/g, '');
+
+			$.ajax({
+				url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
+				method: 'GET',
+				dataType: 'jsonp',
+				success: function (data) {
+					console.log(data);
+
+					if (data.status === 'OK') {
+						$('#empresa').val(data.nome);
+						$('#telefone').val(data.telefone);
+						$("#logradouro").val(data.logradouro);
+						$("#bairro").val(data.bairro);
+						$("#numero").val(data.numero);
+
+
+
+					} else {
+						alert('Não foi possível buscar os dados da empresa');
+					}
+				},
+				error: function () {
+					alert('Não foi possível buscar os dados da empresa');
+				}
+			});
+		}
+	</script>
+
+
+
+</head>
+
+<body>
+
+	<style>
+
+*{
+
+padding: 0 ;
+margin: 0;
+}
+
+.container{
+
+background-color: rgb(47, 47, 155);
+padding: 5px;
+color: white;
+font-size: 30px;
+text-align: center;
+}
+
+input,label,select{
+
+padding: 5px;
+margin: auto 15px;
+border-radius: 5px;
+}
+
+form{
+
+border: 1px solid black;
+
+width: 440px;
+
+height: 350px;
+
+margin: 10px;
+
+margin-left: auto;
+margin-right: auto;
+
+border-radius: 5px;
+padding: 10px;
+
+}
+
+.telefone{
+
+margin-left: 250px;
+position: relative;
+bottom: 47px;
+
+}
+
+#telefone{
+
+margin-left: 250px;
+position: relative;
+bottom: 47px;
+
+}
+
+.cnpj{
+
+text-align: center;
+}
+
+.cpf_cnpj{
+
+position: relative;
+right: 30px;
+top: 6px;
+}
+
+#cpf_cnpj{
+
+position: relative;
+left: 50px;
+bottom: 5px;
+}
+#logradouro{
+
+width: 250px;
+}
+
+#empresa{
+
+width: 250px;
+
+}
+
+#volumes{
+
+width: 53px;
+position: relative;
+bottom: 53px;
+
+}
+
+.volumes{
+
+position: relative;
+bottom: 53px;
+}
+
+#peso{
+
+width: 50px;
+margin-left: 100px;
+position:relative;
+bottom: 100px;
+
+}
+.peso{
+
+width: 50px;
+margin-left: 100px;
+position:relative;
+bottom: 100px;
+}
+
+.contato{
+
+position: relative;
+right: 198px;
+top: 28px;
+
+}
+
+#nome{
+
+position: relative;
+right: 115px;
+width: 75px;
+top: 28px;
+
+}
+
+.telefone{
+
+position: relative;
+left: 50px;
+bottom: 206px;
+
+
+}
+
+#telefone{
+
+position: relative;
+left: 50px;
+width: 110px;
+bottom: 206px;
+
+}
+
+.localidade{
+
+position: relative;
+left: 250px;
+bottom: 290px;
+
+}
+
+#localidade{
+
+position: relative;
+left: 250px;
+bottom: 290px;
+
+
+}
+
+.observacao{
+
+position: relative;
+left: 30px;
+bottom: 70px;
+}
+
+#observacao{
+
+
+position: relative;
+left: 30px;
+bottom: 70px;
+}
+.button{
+
+position: relative;
+bottom: 130PX;
+left: 30px;
+padding: 10px;
+background-color: rgb(47, 47, 155);
+color: white;
+border-radius: 5px;
+}
+
+.numero{
+
+position: relative;
+left: 290px;
+bottom: 65px;
+
+}
+
+#numero{
+
+width: 50px;
+position: relative;
+left: 290px;
+bottom: 65px;
+
+}
+
+.bairro{
+
+position: relative;
+right:100px;
+bottom: 30px;
+
+}
+
+#bairro{
+position: relative;
+bottom: 33px;
+
+}
+button{
+
+padding: 10px;
+background-color: rgb(47, 47, 155);
+color: white;
+border-radius: 5px;
+position: relative;
+left: 50px;
+bottom: 5px;
+}
+
+#reset{
+
+bottom: 130px; 
+padding: 10px;
+margin: auto;
+}
+	</style>
+
+	<div class="container">Coleta</div>
+
+	<div class="cnpj">
+
+		<div id="reset">
+
+			<label for="nome" class="contato">Contato:</label><br>
+			<input type="text" id="nome" name="nome" onblur="this.value=this.value.toUpperCase()">
+
+			<label for="cpf_cnpj" class="cpf_cnpj">CPF ou CNPJ:</label><br>
+			<input type="text" id="cpf_cnpj" name="cpf_cnpj"><button onclick="buscarCNPJ()">Buscar</button>
+
+		</div>
+	</div>
+	<form id="reset">
+		<label for="empresa">Empresa:</label><br>
+		<input type="text" id="empresa" name="empresa" onblur="this.value=this.value.toUpperCase()"><br><br>
+		<label for="endereco">Endereço:</label><br>
+		<input type="text" id="logradouro" name="endereco" onblur="this.value=this.value.toUpperCase()"><br><br>
+		<label for="numero" class="numero">Nº</label><br>
+		<input type="number" id="numero" name="numero">
+		<label for="bairro" class="bairro">Bairro:</label><br>
+		<input type="text" id="bairro" name="bairro" onblur="this.value=this.value.toUpperCase()"><br>
+		<label for="telefone" class="telefone">Telefone:</label><br>
+		<input type="tel" id="telefone" name="telefone" onkeyup="formatarTelefone(this)"><br>
+		<label for="quantidade_volumes" class="volumes">Volumes:</label><br>
+		<input type="number" id="volumes" name="quantidade_volumes"><br>
+		<label for="peso" class="peso">Peso:</label><br>
+		<input type="text" id="peso" name="peso"><br>
+		<label for="observacao" class="observacao">Observação:</label><br>
+		<textarea id="observacao" name="observacao" onblur="this.value=this.value.toUpperCase()" rows="3"
+			cols="50"></textarea>
+
+		<label for="localidade" class="localidade">Setor:</label><br>
+		<select id="localidade" name="localidade">
+			<option value="jau1">JAU 1</option>
+			<option value="jau2">JAU 2</option>
+			<option value="avenida">AVENIDA</option>
+			<option value="centro">CENTRO</option>
+			<option value="dois_corregos">DOIS CORREGOS</option>
+			<option value="barra_bonita">BARRA BONITA</option>
+			<option value="bariri">BARIRI</option>
+			<option value="territorio">TERRITORIO</option>
+			<option value="super">SUPER</option>
+			<option value="bocaina">BOCAINA</option>
+		</select><br>
+		<input type="hidden" id="telefone_localidade" name="telefone_localidade"><br><br>
+		<button type="button" class="button" value="Enviar Coleta" onclick="enviarWhatsapp()">Enviar Coleta</button>
+		<button type="button" id="reset" onclick="limpar_inputs()+limpar_textarea()">Limpar</button>
+	</form>
+	<script>
+		function enviarWhatsapp() {
+			var nome = document.getElementById("nome").value;
+			var telefone = document.getElementById("telefone").value;
+			var cpf_cnpj = document.getElementById("cpf_cnpj").value;
+			var empresa = document.getElementById("empresa").value;
+			var endereco = document.getElementById("logradouro").value;
+			var numero = document.getElementById("numero").value;
+			var bairro = document.getElementById("bairro").value;
+			var quantidade_volumes = document.getElementById("volumes").value;
+			var peso = document.getElementById("peso").value;
+			var localidade = document.getElementById("localidade").value;
+			var observacao = document.getElementById("observacao").value;
+
+			var numeros = {
+				"jau1": "5514997995320",
+				"jau2": "5514996442470",
+				"avenida": "551498189XXX",
+				"centro": "551491851883",
+				"dois_corregos": "5514997373738",
+				"barra_bonita": "5514996531103",
+				"bariri": "551498183XXX",
+				"territorio": "5514991931176",
+				"super": "5514991397504",
+				"bocaina": "5514991931176"
+			};
+
+			var telefone_localidade = numeros[localidade];
+
+			var mensagem = "Solicitante " + nome + ",\n" +
+				"Telefone: " + telefone + ",\n" +
+				"CPF/CNPJ: " + cpf_cnpj + ",\n" +
+				"Empresa: " + empresa + ",\n" +
+				"Endereço: " + endereco + "," + "Nº" + numero + ".\n" +
+				"Bairro: " + bairro + ",\n" +
+				"Volumes: " + quantidade_volumes + ",\n" +
+				"Peso: " + peso + ",\n" +
+				"Obs: " + observacao + ",\n"
+
+			mensagem = encodeURIComponent(mensagem);
+
+			var url = "https://wa.me/" + telefone_localidade + "?text=" + mensagem;
+
+			window.location.href = url;
+
+
+		}
+
+		function formatarTelefone(campoTelefone) {
+			var numero = campoTelefone.value.replace(/\D/g, '');
+			numero = numero.replace(/^(\d{2})(\d)/g, '($1) $2');
+			numero = numero.replace(/(\d)(\d{4})$/, '$1-$2');
+			campoTelefone.value = numero;
+		}
+
+
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			$('#cpf_cnpj').inputmask({
+				mask: ['999.999.999-99', '99.999.999/9999-99'],
+				keepStatic: true
+			});
+		});
+
+	</script>
+
+<script>
+	function limpar_inputs() {
+	  var inputs = document.getElementsByTagName('input');
+	  for (var i = 0; i < inputs.length; i++) {
+		inputs[i].value = '';
+	  }
+	}
+
+	function limpar_textarea(){
+
+		var textarea = document.getElementsByTagName('textarea');
+		for (var i =0; i < textarea.length; i++){
+			textarea[i].value = '';
+		}
+	}
+  </script>
+
+
+</body>
+
+</html>
